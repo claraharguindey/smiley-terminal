@@ -1,5 +1,8 @@
 var express = require('express');
 var socket = require('socket.io');
+var rpi_gpio_buttons = require('rpi-gpio-buttons');
+var buttons = rpi_gpio_buttons([3]);
+var count = 0;
 
 // App setup
 var app = express();
@@ -18,8 +21,10 @@ app.use(express.static('public'));
 var io = socket(server);
 io.on('connection', (socket) => {
     console.log('made socket connection', socket.id);
-    // Handle chat event
-    setTimeout(emitEvent, 1500);
+    // Handle button event
+    buttons.on('clicked', function(){
+        emitEvent();
+    })
 });
 
 function emitEvent(){
