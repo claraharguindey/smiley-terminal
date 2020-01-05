@@ -21,11 +21,12 @@ app.use(express.static('public'));
 var io = socket(server);
 io.on('connection', (socket) => {
     console.log('made socket connection', socket.id);
-    // Handle button event
-    buttons.on('clicked', function(){
-        emitEvent();
-    })
+    setTimeout(emitEvent, 1500);
 });
+// Handle button event
+buttons.on('clicked', function(){
+    emitEvent();
+})
 
 function emitEvent(){
     io.sockets.emit('chat',  {
