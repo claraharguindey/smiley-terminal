@@ -43,9 +43,9 @@ io.on('connection', (socket) => {
 });
 
 function emitEvent(param1, param2) {
-    io.sockets.emit('chat',  {
-        message: param1,
-        handle: param2
+    io.sockets.emit('output',  {
+        param1,
+        param2
     });
     logger.write(param1, param2);
 }

@@ -5,7 +5,7 @@ const socket = io.connect('http://localhost:4000');
 const output = document.getElementById('output');
 
 // Listen for events
-socket.on('chat', function(data){
+socket.on('output', function(data){
     console.log(data)
-    output.innerHTML += '<p><strong>' + data.handle + ': </strong>' + data.message + '</p>';
+    output.innerHTML += '<p><strong>' + data.param1 + ': </strong>' + data.param2 + '</p>';
 });
