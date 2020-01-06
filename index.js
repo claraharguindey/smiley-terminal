@@ -31,15 +31,9 @@ const server = app.listen(4000, function(){
 });
 const io = socket(server);
 
-io.on('connection', (socket) => {
-    console.log('made socket connection', socket.id);
-    setTimeout(emitEvent, 1500);
-});
 
 //button event listener
-buttonEventEmitter.on('event', () => {
-    console.log('evento registrao bebe!! tamos ready');
-});
+
 
 function emitEvent() {
     io.sockets.emit('chat',  {
@@ -49,3 +43,11 @@ function emitEvent() {
     logger.write('some data');
 }
 
+
+io.on('connection', (socket) => {
+    console.log('made socket connection', socket.id);
+    if(socket)
+{ buttonEventEmitter.on('event', () => {
+    emitEvent()
+});}
+});
