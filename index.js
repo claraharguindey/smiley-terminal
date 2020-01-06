@@ -24,6 +24,7 @@ io.on('connection', (socket) => {
     setTimeout(emitEvent, 1500);
 });
 
+//button event listener
 buttonEventEmitter.on('event', () => {
     console.log('evento registrao bebe!! tamos ready');
 });
