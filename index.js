@@ -2,6 +2,8 @@ const path = require('path');
 const express = require('express');
 const socket = require('socket.io');
 const emitter = require('./button-control');
+const fs = require('fs');
+
 const buttonEventEmitter = emitter.buttonEventEmitter;
 
 // App setup
@@ -13,9 +15,6 @@ app.get('/', (request, response) => {
         }
     });
 });
-
-const fs = require('fs');
-
 
 const logger = fs.createWriteStream('log.txt', {
     flags: 'a' // 'a' means appending (old data will be preserved)
@@ -32,22 +31,21 @@ const server = app.listen(4000, function(){
 const io = socket(server);
 
 
-//button event listener
-
-
-function emitEvent() {
-    io.sockets.emit('chat',  {
-        message: 'hey',
-        handle:'ho'
-    });
-    logger.write('some data');
-}
-
-
+// Connection check and button event listener
 io.on('connection', (socket) => {
     console.log('made socket connection', socket.id);
-    if(socket)
-{ buttonEventEmitter.on('event', () => {
-    emitEvent()
-});}
+    if(socket) {
+        buttonEventEmitter.on('event', (param1, param2) => {
+            console.log('param1', param1, 'param2', param2);
+            emitEvent(param1, param2)
+        })
+    ;}
 });
+
+function emitEvent(param1, param2) {
+    io.sockets.emit('chat',  {
+        message: param1,
+        handle: param2
+    });
+    logger.write(param1, param2);
+}
