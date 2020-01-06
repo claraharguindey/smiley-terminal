@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const socket = require('socket.io');
 const emitter = require('./button-control');
@@ -5,20 +6,31 @@ const buttonEventEmitter = emitter.buttonEventEmitter;
 
 // App setup
 const app = express();
-const fs = require('fs');
-const server = app.listen(4000, function(){
-    console.log('listening for requests on port 4000,');
+app.get('/', (request, response) => {
+    response.sendFile(path.resolve(__dirname, 'public/index.html'), {
+        headers: {
+            'Content-Type': 'text/html',
+        }
+    });
 });
+
+const fs = require('fs');
+
 
 const logger = fs.createWriteStream('log.txt', {
     flags: 'a' // 'a' means appending (old data will be preserved)
 })
 
 // Static files
-app.use(express.static('public'));
+app.use('/assets/', express.static(path.resolve(__dirname, 'public')));
+app.use('/assets/', express.static(path.resolve(__dirname, 'node_modules/socket.io-client/dist')));
 
 // Socket setup & pass server
+const server = app.listen(4000, function(){
+    console.log('listening for requests on port 4000,');
+});
 const io = socket(server);
+
 io.on('connection', (socket) => {
     console.log('made socket connection', socket.id);
     setTimeout(emitEvent, 1500);
