@@ -4,16 +4,13 @@ const buttonEventEmitter = new EventEmitter();
 
 button.on('clicked', function(pin) {
     console.log(pin, 'clicked');
-    switch(pin){
-        case 3:
-            buttonEventEmitter.emit('event', 'reacción 3 registrada', '😡');
-        case 11:
-            buttonEventEmitter.emit('event', 'reacción 11 registrada', '🧚‍♀️');
-        case 29:
-            buttonEventEmitter.emit('event', 'reacción 29 registrada', '🐷');
-        case 33:
-            buttonEventEmitter.emit('event', 'reacción 33 registrada', '🐤');
+    const reactions = {
+        31: 'red',
+        29: 'orange',
+        5: 'light green',
+        3: 'green'
     }
+    buttonEventEmitter.emit('event', reactions[pin], ' button clicked!' );
 })
 
 exports.buttonEventEmitter = buttonEventEmitter;
