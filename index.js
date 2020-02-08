@@ -26,7 +26,6 @@ io.on('connection', (socket) => {
     console.log('made socket connection', socket.id);
     if(socket) {
         buttonEventEmitter.on('event', (param1, param2) => {
-            console.log('param1', param1, 'param2', param2);
             emitEvent(param1, param2)
         })
     ;}
