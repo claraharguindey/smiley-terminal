@@ -2,8 +2,6 @@ const path = require('path');
 const express = require('express');
 const socket = require('socket.io');
 const emitter = require('./button-control');
-const fs = require('fs');
-
 const buttonEventEmitter = emitter.buttonEventEmitter;
 
 // App setup
@@ -15,10 +13,6 @@ app.get('/', (request, response) => {
         }
     });
 });
-
-const logger = fs.createWriteStream('log.txt', {
-    flags: 'a' // 'a' means appending (old data will be preserved)
-})
 
 // Static files
 app.use('/assets/', express.static(path.resolve(__dirname, 'public')));
@@ -47,5 +41,5 @@ function emitEvent(param1, param2) {
         param1,
         param2
     });
-    logger.write(param1, param2);
+
 }
