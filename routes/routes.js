@@ -2,9 +2,9 @@ const pool = require('../data/config');
 
 const router = app => {
     app.get('/', (request, response) => {
-        response.send({
-            message: 'jeje'
-        })
+        response.send(
+            'Valora tu experiencia'
+        )
     })
 
     app.get('/reactions', (request, response) => {
