@@ -3,8 +3,7 @@ const EventEmitter = require('events').EventEmitter;
 const buttonEventEmitter = new EventEmitter();
 
 button.on('clicked', function(pin) {
-    console.log(pin, 'clicked');
-    buttonEventEmitter.emit('event', 'param1', 'param2');
+    buttonEventEmitter.emit('event', 'buttonClicked', pin);
 })
 
 exports.buttonEventEmitter = buttonEventEmitter;
