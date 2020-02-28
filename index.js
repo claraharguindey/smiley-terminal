@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const socket = require('socket.io');
 const emitter = require('./button-control');
+const mysql = require('mysql');
 const buttonEventEmitter = emitter.buttonEventEmitter;
 
 // App setup
@@ -43,3 +44,17 @@ function emitEvent(param1, param2) {
     });
 
 }
+
+
+// Connection with DB
+const connection = mysql.createConnection({
+    host: "localhost",
+    user: "desmusea",
+    password: "desmusea2020"
+  });
+  
+  connection.connect(function(err) {
+    if (err) { console.log('err')}
+    else {
+    console.log("Connected!");
+ }});
