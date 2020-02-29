@@ -30,8 +30,8 @@ const router = app => {
          })  
     })
 
-    app.post('/reactions', (request, response) => {
-        pool.query('INSERT INTO answers SET ?', request.body, (error, result) => {
+    app.post('/results', (request, response) => {
+        pool.query('INSERT INTO results SET ?', request.body, (error, result) => {
             if (err) {
                 console.log('err', err)
             } else {
