@@ -27,7 +27,7 @@ const server = app.listen(4000, function(){
     console.log('listening for requests on port 4000,');
 });
 const io = socket(server);
-  
+
 // Connection check and button event listener
 io.on('connection', (socket) => {
     console.log('made socket connection', socket.id);

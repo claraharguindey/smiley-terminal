@@ -14,20 +14,20 @@ const router = app => {
             } else {
                 response.send(reactions);
             }
-         })  
-         console.log("Connected to DB!");
+        })  
+    console.log("Connected to DB!");
     })
 
     app.get('/reactions/:id', (request, response) => {
-      const id = request.params.id;
-      
-      pool.query("SELECT * FROM reactions WHERE id = ?", id, (err, reaction) => {
+        const id = request.params.id;
+        
+         pool.query("SELECT * FROM reactions WHERE id = ?", id, (err, reaction) => {
             if (err) {
                 console.log('err', err)
             } else {
                 response.send(reaction);
             }
-         })  
+        })  
     })
 
     app.post('/results', (request, response) => {
