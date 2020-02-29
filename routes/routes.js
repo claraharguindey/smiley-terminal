@@ -1,10 +1,14 @@
 const pool = require('../data/config');
 
 const router = app => {
-    app.get('/', (request, response) => {
-        response.send(
-            'Valora tu experiencia'
-        )
+    app.get('/answers', (request, response) => {
+        pool.query("SELECT * FROM answers", (err, answers) => {
+            if (err) {
+                console.log('err', err);
+            } else {
+                response.send(answers);
+            }
+        })  
     })
 
     app.get('/reactions', (request, response) => {
@@ -15,7 +19,6 @@ const router = app => {
                 response.send(reactions);
             }
         })  
-    console.log("Connected to DB!");
     })
 
     app.get('/reactions/:id', (request, response) => {
