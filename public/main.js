@@ -6,13 +6,12 @@ const output = document.getElementById('output');
 let answers;
 let packs;
 
-fetch('http://localhost:4000/answers').then((response) => {
-     answers = response;
-})
+function getAnswersAndPacks () {
+    fetch('http://localhost:4000/answers').then((result) => result.json()).then((json) => answers = json);
+    fetch('http://localhost:4000/reactions').then((result) => result.json()).then((json) => packs = json);
+}
 
-fetch('http://localhost:4000/reactions').then((response) => {
-    packs = response;
-})
+
 
 // Listen for events
 socket.on('output', function(data) {
