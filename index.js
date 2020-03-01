@@ -10,7 +10,8 @@ const request = require('request');
 
 // App setup
 const app = express();
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded( { extended: true }));
 routes(app);
 
 app.get('/', (request, response) => {
@@ -24,8 +25,7 @@ app.get('/', (request, response) => {
 // Static files
 app.use('/assets/', express.static(path.resolve(__dirname, 'public')));
 app.use('/assets/', express.static(path.resolve(__dirname, 'node_modules/socket.io-client/dist')));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded( { extended: true }));
+
 // Socket setup & pass server
 const server = app.listen(4000, function(){
     console.log('listening for requests on port 4000,');

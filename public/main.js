@@ -1,5 +1,6 @@
 // Make connection
-const socket = io.connect('http://localhost:4000');
+const BASE_URL = 'http://localhost:4000';
+const socket = io.connect(`${BASE_URL}`);
 
 // Query DOM
 const output = document.getElementById('output');
@@ -11,16 +12,38 @@ let currentReaction;
 let currentReactionId;
 let currentPack;
 let currentPackId;
+let currentAnswerId;
+let buttonClicked;
 
-fetch('http://localhost:4000/answers').then((result) => result.json()).then((json) => answers = json);
-fetch('http://localhost:4000/reactions').then((result) => result.json()).then((json) => packs = json);
+fetch(`${BASE_URL}/answers`).then((result) => result.json()).then((json) => answers = json);
+fetch(`${BASE_URL}/reactions`).then((result) => result.json()).then((json) => packs = json);
 
 
 socket.on('output', function(data) {
     if (data.event === 'buttonClicked') {
+        buttonClicked = data.value;
         setCurrentReaction();
     }
 });
+
+function setAnswer() {
+    switch(buttonClicked) {
+        case 3:
+            currentAnswerId = 1;
+        break;    
+        case 5:
+            currentAnswerId = 2;
+        break;
+        case 29:
+            currentAnswerId = 3;
+        break;    
+        case 31:
+            currentAnswerId = 4;
+        break;         
+    }
+
+    postResults();
+};
 
 function setCurrentReaction() {
     currentPack = packs[packsCounter];
@@ -29,16 +52,19 @@ function setCurrentReaction() {
     currentReactionId = reactionsFromPack[reactionsCounter];
 
     if (reactionsCounter !== 5) {
-        getAndPrintCurrentReaction()
+        getAndPrintCurrentReaction();
     }
 
     updateCounter();
 }
 
 function getAndPrintCurrentReaction() {
-    fetch(`http://localhost:4000/reactions/${currentReactionId}`).then((result) => result.json()).then((json) => {
+    fetch(`${BASE_URL}/reactions/${currentReactionId}`).then((result) => result.json()).then((json) => {
         currentReaction=json[0];
         printReaction();
+        if (reactionsCounter !== 0) { 
+            setAnswer();
+        }
     });
 }
 
@@ -60,6 +86,22 @@ function updateCounter() {
             packsCounter = 0;
         }
     } 
+}
+
+function postResults() {
+    fetch(`${BASE_URL}/results`, {
+        method: 'POST',
+        body: JSON.stringify({
+            id_pack: currentPackId,
+            id_reaction: currentReactionId,
+            id_answer: currentAnswerId
+        }),
+        headers: {
+            'Accept': 'application/json',
+            'Content-type': 'application/json',
+        }
+    }).then(res => res.json())
+      .then(response => console.log(response))
 }
 
 function setInitialText() {

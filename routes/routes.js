@@ -23,7 +23,6 @@ const router = app => {
 
     app.get('/reactions/:id', (request, response) => {
         const id = request.params.id;
-        
          pool.query("SELECT * FROM reactions WHERE id = ?", id, (err, reaction) => {
             if (err) {
                 console.log('err', err)
@@ -34,13 +33,14 @@ const router = app => {
     })
 
     app.post('/results', (request, response) => {
-        pool.query('INSERT INTO results SET ?', request.body, (error, result) => {
-            if (err) {
-                console.log('err', err)
+        pool.query(`INSERT INTO results (id_pack, id_reaction, id_answer) VALUES (${request.body.id_pack}, ${request.body.id_reaction}, ${request.body.id_answer})`, request.body, (error, result) => {
+            if(error) {
+                console.log(error);
             } else {
-                response.status(201).send(`answer added with ID: ${result.id}`);
+                response.send(result);
             }
         })
+       
     })
 }
 
