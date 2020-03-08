@@ -1,8 +1,7 @@
-// Make connection
+
 const BASE_URL = 'http://localhost:4000';
 const socket = io.connect(`${BASE_URL}`);
 
-// Query DOM
 const output = document.getElementById('output');
 let answers;
 let packs;
