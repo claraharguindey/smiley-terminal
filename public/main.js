@@ -27,7 +27,13 @@ socket.on('output', function(data) {
             setInitialText();
             timeOut = null;
         } else {
-            setCurrentReaction();
+            if(packsCounter < 18) {
+                setCurrentReaction();
+            } else {
+                packsCounter = 0;
+                reactionsCounter = 0;
+                setCurrentReaction();
+            }
         }
     }
 });
@@ -56,7 +62,6 @@ function setCurrentReaction() {
     currentPackId = currentPack.id;
     const reactionsFromPack = JSON.parse(currentPack.reactions_ids);
     currentReactionId = reactionsFromPack[reactionsCounter];
-
     if (reactionsCounter !== 5) {
         getAndPrintCurrentReaction();
     }
@@ -89,9 +94,7 @@ function updateCounter() {
         reactionsCounter = 0;
         if (packsCounter < packs.length) {
             packsCounter++
-        } else {
-            packsCounter = 0;
-        }
+        } 
     } 
 }
 
