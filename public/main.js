@@ -14,7 +14,7 @@ let currentPack;
 let currentPackId;
 let currentAnswerId;
 let buttonClicked;
-
+let timeOut;
 fetch(`${BASE_URL}/answers`).then((result) => result.json()).then((json) => answers = json);
 fetch(`${BASE_URL}/reactions`).then((result) => result.json()).then((json) => packs = json);
 
@@ -22,7 +22,13 @@ fetch(`${BASE_URL}/reactions`).then((result) => result.json()).then((json) => pa
 socket.on('output', function(data) {
     if (data.event === 'buttonClicked') {
         buttonClicked = data.value;
-        setCurrentReaction();
+        if(timeOut) {
+            clearTimeout(timeOut);
+            setInitialText();
+            timeOut = null;
+        } else {
+            setCurrentReaction();
+        }
     }
 });
 
@@ -76,9 +82,10 @@ function printReaction() {
 
 function updateCounter() {
     if (reactionsCounter < 5) {
-        reactionsCounter++
+        reactionsCounter++;
     } else {
-        setInitialText();
+        timeOut = setTimeout(() => setInitialText(), 2000);
+        setFinalText(); 
         reactionsCounter = 0;
         if (packsCounter < packs.length) {
             packsCounter++
@@ -105,5 +112,9 @@ function postResults() {
 }
 
 function setInitialText() {
-    output.innerHTML = '<p>' + '¡Valora tu experiencia!'+ '</p>' + '<p>' + 'Indica tu grado de conformidad con respecto a las siguientes afirmaciones:'+ '</p>';
+    output.innerHTML = '<p>' + '¡Valora tu experiencia!'+ '</p>' + '<p>' + 'Indica tu grado de conformidad con respecto a las siguientes afirmaciones:'+ '</p>'+ '<p class="press-button">' + '(Pulsa cualquier botón para comenzar)' + '</p>';
+}
+
+function setFinalText() {
+    output.innerHTML = '<p>' + '¡Gracias por participar!'+ '</p>';
 }
