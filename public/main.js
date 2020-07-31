@@ -80,7 +80,7 @@ function getAndPrintCurrentReaction() {
 
 function printReaction() {
     if (currentReaction) {
-        output.innerHTML = '<p class="reaction-text">' + currentReaction.text+ '</p>';
+        output.innerHTML = '<p class="reaction-text">' + currentReaction.text + '</p>';
     }
 }
 

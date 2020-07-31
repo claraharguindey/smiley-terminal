@@ -31,7 +31,7 @@ const io = socket(server);
 
 io.on('connection', (socket) => {
     console.log('Made socket connection', socket.id);
-    if(socket) {
+    if (socket) {
         buttonEventEmitter.on('event', (event, value) => {
             emitEvent(event, value)
         })

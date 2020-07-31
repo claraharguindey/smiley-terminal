@@ -8,17 +8,17 @@
 }
 
 .content {
-    text-align: center;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    font-size: 5.5vh;
-    font-weight: 600;
-    max-height: 100vh;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  font-size: 5.5vh;
+  font-weight: 600;
+  max-height: 100vh;
 }
 
 .press-button {
-    font-size: 3vh;
+  font-size: 3vh;
 }
 
 .reaction-text {
-  color: #8c8c8c;
+  color: #000000;
 }
