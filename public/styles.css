@@ -15,10 +15,10 @@
   
 .content {
   text-align: center;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Helvetica', sans-serif;
   font-size: 8vh;
   max-height: 100vh;
-  margin: 15px;
+  margin: 15px 30px;
 }
 
 .press-button {
