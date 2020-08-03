@@ -16,11 +16,10 @@
 .content {
   text-align: center;
   font-family: 'Roboto', sans-serif;
-  font-size: 9vh;
+  font-size: 8vh;
   max-height: 100vh;
 }
 
 .press-button {
-  font-size: 3.5vh;
+  font-size: 4vh;
 }
-  
